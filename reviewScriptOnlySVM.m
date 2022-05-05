@@ -53,9 +53,11 @@ sentimentScores = zeros(size(prepData));
 
 for i = 1 : prepData.length
     data = prepData(i).Vocabulary;
+
     vector = word2vec(embeddings, data);
     [ ~ , scores ] = predict(SVM, vector );
     sentimentScores(i) = mean(scores(:,1));
+    
     if (isnan(sentimentScores(i)))
         sentimentScores(i) = 0;
     end

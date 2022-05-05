@@ -54,6 +54,13 @@ sentimentScores = zeros(size(prepData));
 sentimentScores = vaderSentimentScores(prepData);
 for i = 1 : prepData.length
     data = prepData(i).Vocabulary;
+
+    if (sentimentScores(i) == 0)
+        vector = word2vec(embeddings, data);
+        [ ~ , scores ] = predict(SVM, vector );
+        sentimentScores(i) = mean(scores(:,1));
+    end
+
     if (isnan(sentimentScores(i)))
             sentimentScores(i) = 0;
     end
@@ -63,9 +70,7 @@ for i = 1 : prepData.length
     elseif ( (sentimentScores(i) > -0.75) && (sentimentScores(i) < -0.25) )
         sentimentScores(i) = 2;
     elseif ( (sentimentScores(i) >= -0.25) && (sentimentScores(i) <= 0.25) )
-        vector = word2vec(embeddings, data);
-        [ ~ , scores ] = predict(SVM, vector );
-        sentimentScores(i) = mean(scores(:,1));
+        sentimentScores(i) = 3;
     elseif ( (sentimentScores(i) > 0.25) && (sentimentScores(i) < 0.75) )
         sentimentScores(i) = 4;
     elseif (sentimentScores(i) >= 0.75)
