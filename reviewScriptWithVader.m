@@ -95,8 +95,8 @@ for i = 1 : prepData.length
     fprintf('Sent: %d | words: %s | Found Score: %d | Correct Score: %d \n', i, joinWords(prepData(i)), sentimentScores(i), actualScore(i));
 end
 
-NoOfNeutral = sum(sentimentScores == 3);
-NoOfFound = numel(sentimentScores) - NoOfNeutral;
+NumNeutral = sum(sentimentScores == 3);
+NumFound = numel(sentimentScores) - NumNeutral;
 
-fprintf("Coverage: %2.2f%% | Number Found: %d | Neutral: %d \n", (NoOfFound*100)/numel(sentimentScores), NoOfFound, NoOfNeutral);
+fprintf("Coverage: %2.2f%% | Number Found: %d | Neutral: %d \n", (NumFound*100)/numel(sentimentScores), NumFound, NumNeutral);
 fprintf("true pos: %d | true neg: %d | false pos: %d | false neg: %d",truePos,trueNeg,falsePos,falseNeg);
